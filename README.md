@@ -80,7 +80,7 @@ numeric
    final_time   0.5
    min_residue  1.0e-6
    reconstruct  sp_weno_dl
-   net_file 	../../networks/dsp_weno_MSE.txt
+   net_file 	../../networks/dsp_weno.txt
 }
 
 material
