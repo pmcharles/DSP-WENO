@@ -1,0 +1,93 @@
+grid
+{
+   x_min   -5
+   x_max   5
+   Nx_cell { 400 }
+   y_min   0
+   y_max   1
+   Ny_cell { 2 }
+   z_min   0
+   z_max   1
+   Nz_cell { 2  }
+}
+
+numeric
+{
+   time_scheme  ssprk3
+   cfl          0.4
+   max_iter     50000
+   final_time   1.8
+   min_residue  1.0e-6
+   reconstruct  sp_weno_dl
+   net_file     ../../../networks/dsp_weno.txt
+}
+
+material
+{
+   gamma       1.4
+   gas_const   1.0
+   viscosity
+   {
+      model    constant
+      mu_ref   0.0
+   }
+   prandtl     1.0
+   model       euler
+   flux        kepes_tecno4_roe
+   EC1_fix     no
+}
+
+constants
+{
+}
+
+initial_condition
+{
+   density           3.857143*(x<-4) + (1+0.2*sin(5*x))*(x>=-4)
+   xvelocity         2.629369*(x<-4)
+   yvelocity         0.0
+   zvelocity         0.0
+   pressure          10.33333*(x<-4) + 1*(x>=-4)
+}
+
+exact_soln
+{
+   available   no
+}
+
+
+boundary_condition
+{
+   xleft
+   {
+      type neumann
+   }
+   xright
+   {
+      type neumann
+   }
+   yleft
+   {
+      type periodic
+   }
+   yright
+   {
+      type periodic
+   }
+   zleft
+   {
+      type periodic
+   }
+   zright
+   {
+      type periodic
+   }
+}
+
+output
+{
+   OOC_study        no
+   problem_dim      1
+   time_stamps      5
+   output_path .
+}

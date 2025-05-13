@@ -1,0 +1,86 @@
+grid
+{
+   x_min   -4
+   x_max   4
+   Nx_cell { 400 }
+   y_min   0
+   y_max   1
+   Ny_cell { 2 }
+   z_min   0
+   z_max   1
+   Nz_cell { 2 }
+}
+
+numeric
+{
+   time_scheme  ssprk3
+   cfl          0.4
+   max_iter     50000
+   final_time   0.4
+   min_residue  1.0e-6
+   reconstruct  sp_weno_dl
+   net_file 	../../networks/dsp_weno.txt
+}
+
+material
+{
+   model       burgers
+   flux        bur_tecno4
+}
+
+constants
+{
+   x0    -1.0
+   x1    -0.5
+   x2    0.0
+   x3    0.5
+   x4    1.0
+   
+}
+
+initial_condition
+{
+   3*(x>=x0)*(x<x1) + (x>=x1)*(x<x2) + 3*(x>=x2)*(x<x3) + 2*(x>=x3)*(x<x4) + sin(pi*x)*((x<x0) + (x>x4))
+}
+
+exact_soln
+{
+   available   no
+}
+
+
+boundary_condition
+{
+   xleft
+   {
+      type periodic
+   }
+   xright
+   {
+      type periodic
+   }
+   yleft
+   {
+      type periodic
+   }
+   yright
+   {
+      type periodic
+   }
+   zleft
+   {
+      type periodic
+   }
+   zright
+   {
+      type periodic
+   }
+}
+
+output
+{
+   OOC_study        no
+   problem_dim      1
+   time_stamps      5
+   output_path .
+}

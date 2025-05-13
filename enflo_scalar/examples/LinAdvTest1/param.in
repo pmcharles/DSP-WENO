@@ -1,0 +1,82 @@
+grid
+{
+   x_min   -pi
+   x_max   pi
+   Nx_cell { 100,200,400,600,800,1000 }
+   y_min   0
+   y_max   1
+   Ny_cell { 2,2,2,2,2,2 }
+   z_min   0
+   z_max   1
+   Nz_cell { 2,2,2,2,2,2 }
+}
+
+numeric
+{
+   time_scheme  ssprk3
+   cfl          0.4
+   max_iter     50000
+   final_time   0.5
+   min_residue  1.0e-6
+   reconstruct  sp_weno_dl
+   net_file 	../../networks/dsp_weno.txt
+}
+
+material
+{
+   model       linadv
+   vel         { 1 0 0 }
+   flux        lin_tecno4
+}
+
+constants
+{
+}
+
+initial_condition
+{
+   sin(x)
+}
+
+exact_soln
+{
+   available   yes
+   sin(x-t)
+}
+
+
+boundary_condition
+{
+   xleft
+   {
+      type periodic
+   }
+   xright
+   {
+      type periodic
+   }
+   yleft
+   {
+      type periodic
+   }
+   yright
+   {
+      type periodic
+   }
+   zleft
+   {
+      type periodic
+   }
+   zright
+   {
+      type periodic
+   }
+}
+
+output
+{
+   OOC_study        yes
+   problem_dim      1
+   time_stamps      5
+   output_path .
+}

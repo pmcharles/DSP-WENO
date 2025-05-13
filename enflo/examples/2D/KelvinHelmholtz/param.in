@@ -1,0 +1,108 @@
+grid
+{
+   x_min   -0.5
+   x_max   0.5
+   Nx_cell { 256 }
+   y_min   -0.5
+   y_max   0.5
+   Ny_cell { 256 }
+   z_min   0
+   z_max   1
+   Nz_cell { 2 }
+}
+
+numeric
+{
+   time_scheme  ssprk3
+   cfl          0.4
+   max_iter     50000
+   final_time   3.0
+   min_residue  1.0e-6
+   reconstruct  sp_weno_dl
+   net_file 	../../../networks/dsp_weno.txt
+}
+
+material
+{
+   gamma       1.4
+   gas_const   1.0
+   viscosity
+   {
+      model    constant 
+      mu_ref   0.0
+   }
+   prandtl     0.72
+   model       euler
+   flux        kepes_tecno4_roe
+   EC1_fix     no
+}
+
+constants
+{
+   dL    2.0
+   uL    -0.5
+   vL    0.0
+   pL    2.5
+   dR    1.0
+   uR    0.5
+   vR    0.0
+   pR    2.5
+   I1    -0.25
+   I2    0.25
+   eps   0.01
+}
+
+initial_condition
+{
+   density           dL*(y>I1)*(y<I2) + dR*(y<=I1) + dR*(y>=I2)
+   xvelocity         uL*(y>I1)*(y<I2) + uR*(y<=I1) + uR*(y>=I2)
+   yvelocity         vL*(y>I1)*(y<I2) + vR*(y<=I1) + vR*(y>=I2) + eps*sin(2*pi*x)
+   zvelocity         0
+   pressure          pL*(y>I1)*(y<I2) + pR*(y<=I1) + pR*(y>=I2)
+}
+
+exact_soln
+{
+   available         no
+   density           
+   xvelocity         
+   yvelocity         
+   pressure          
+}
+
+
+boundary_condition
+{
+   xleft
+   {
+      type periodic
+   }
+   xright
+   {
+      type periodic
+   }
+   yleft
+   {
+      type periodic
+   }
+   yright
+   {
+      type periodic
+   }
+   zleft
+   {
+      type periodic
+   }
+   zright
+   {
+      type periodic
+   }
+}
+
+output
+{
+   OOC_study no
+   problem_dim    2
+   time_stamps    30
+   output_path .
+}

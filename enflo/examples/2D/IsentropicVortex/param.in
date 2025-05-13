@@ -1,0 +1,103 @@
+grid
+{
+   x_min   -5
+   x_max   5
+   Nx_cell { 50,100,150,200,300,400 }
+   y_min   -5
+   y_max   5
+   Ny_cell { 50,100,150,200,300,400 }
+   z_min   0
+   z_max   1
+   Nz_cell { 2,2,2,2,2,2 }
+}
+
+numeric
+{
+   time_scheme  ssprk3
+   cfl          0.5
+   max_iter     50000
+   final_time   10.0
+   min_residue  1.0e-6
+   reconstruct  sp_weno_dl
+   net_file 	../../../networks/dsp_weno.txt
+}
+
+material
+{
+   gamma       1.4
+   gas_const   1.0
+   viscosity
+   {
+      model    constant 
+      mu_ref   0.0
+   }
+   prandtl     0.72
+   model       euler
+   flux        kepes_tecno4_roe
+   EC1_fix     no
+}
+
+constants
+{
+   xc    0.0
+   yc    0.0
+   gam   1.4
+   beta  5
+   alpha 0
+   M 1.0
+}
+
+initial_condition
+{
+   density      pow(1.0 - (gam-1)*(pow(beta,2)/(8*gam*pi*pi))*exp((1-pow(x-xc,2)-pow(y-yc,2))),1/(gam-1))
+   xvelocity    M*cos(alpha*pi/180) - (beta/(2*pi))*(y-yc)*exp(0.5*(1-pow(x-xc,2)-pow(y-yc,2)))
+   yvelocity    M*sin(alpha*pi/180) + (beta/(2*pi))*(x-xc)*exp(0.5*(1-pow(x-xc,2)-pow(y-yc,2)))
+   zvelocity    0.0
+   pressure     pow(1.0 - (gam-1)*(pow(beta,2)/(8*gam*pi*pi))*exp((1-pow(x-xc,2)-pow(y-yc,2))),gam/(gam-1))
+}
+
+exact_soln
+{
+   available    yes
+   density      pow(1.0 - (gam-1)*(pow(beta,2)/(8*gam*pi*pi))*exp((1-pow(x-xc,2)-pow(y-yc,2))),1/(gam-1))
+   xvelocity    M*cos(alpha*pi/180) - (beta/(2*pi))*(y-yc)*exp(0.5*(1-pow(x-xc,2)-pow(y-yc,2)))
+   yvelocity    M*sin(alpha*pi/180) + (beta/(2*pi))*(x-xc)*exp(0.5*(1-pow(x-xc,2)-pow(y-yc,2)))
+   zvelocity    0.0
+   pressure     pow(1.0 - (gam-1)*(pow(beta,2)/(8*gam*pi*pi))*exp((1-pow(x-xc,2)-pow(y-yc,2))),gam/(gam-1))
+}
+
+boundary_condition
+{
+   xleft
+   {
+      type periodic
+   }
+   xright
+   {
+      type periodic
+   }
+   yleft
+   {
+      type periodic
+   }
+   yright
+   {
+      type periodic
+   }
+   zleft
+   {
+      type periodic
+   }
+   zright
+   {
+      type periodic
+   }
+}
+
+output
+{
+   OOC_study yes
+   problem_dim    2
+   time_stamps    5
+   output_path .
+}

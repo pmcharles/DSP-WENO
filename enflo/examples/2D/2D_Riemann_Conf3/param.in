@@ -1,0 +1,115 @@
+grid
+{
+   x_min   0
+   x_max   1
+   Nx_cell { 400 }
+   y_min   0
+   y_max   1
+   Ny_cell { 400 }
+   z_min   0
+   z_max   1
+   Nz_cell { 2 }
+}
+
+numeric
+{
+   time_scheme  ssprk3
+   cfl          0.4
+   max_iter     50000
+   final_time   0.3
+   min_residue  1.0e-6
+   reconstruct  sp_weno_dl
+   net_file 	../../../../networks/dsp_weno.txt
+}
+
+material
+{
+   gamma       1.4
+   gas_const   1.0
+   viscosity
+   {
+      model    constant 
+      mu_ref   0.0
+   }
+   prandtl     0.72
+   model       euler
+   flux        kepes_tecno4_roe
+   EC1_fix     no
+}
+
+constants
+{
+   d1    1.5
+   u1    0.0
+   v1    0.0
+   p1    1.5
+   d2    0.5323
+   u2    1.206
+   v2    0.0
+   p2    0.3
+   d3    0.138
+   u3    1.206
+   v3    1.206
+   p3    0.029
+   d4    0.5323
+   u4    0.0
+   v4    1.206
+   p4    0.3
+   x0    0.5
+   y0    0.5
+}
+
+initial_condition
+{
+   density           d1*(x>x0)*(y>y0) + d2*(x<=x0)*(y>y0) + d3*(x<=x0)*(y<=y0) + d4*(x>x0)*(y<=y0)
+   xvelocity         u1*(x>x0)*(y>y0) + u2*(x<=x0)*(y>y0) + u3*(x<=x0)*(y<=y0) + u4*(x>x0)*(y<=y0)
+   yvelocity         v1*(x>x0)*(y>y0) + v2*(x<=x0)*(y>y0) + v3*(x<=x0)*(y<=y0) + v4*(x>x0)*(y<=y0)
+   zvelocity         0
+   pressure          p1*(x>x0)*(y>y0) + p2*(x<=x0)*(y>y0) + p3*(x<=x0)*(y<=y0) + p4*(x>x0)*(y<=y0)
+}
+
+exact_soln
+{
+   available         no
+   density           
+   xvelocity         
+   yvelocity         
+   pressure          
+}
+
+
+boundary_condition
+{
+   xleft
+   {
+      type neumann
+   }
+   xright
+   {
+      type neumann
+   }
+   yleft
+   {
+      type neumann
+   }
+   yright
+   {
+      type neumann
+   }
+   zleft
+   {
+      type neumann
+   }
+   zright
+   {
+      type neumann
+   }
+}
+
+output
+{
+   OOC_study no
+   problem_dim    2
+   time_stamps    30
+   output_path .
+}
