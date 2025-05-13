@@ -2,18 +2,18 @@
 ### Author: Phil Charles and Deep Ray, University of Maryland, College Park
 ### Webpage: pmcharles.github.io, deepray.github.io
 ### Emails: charlesp@umd.edu, deepray@umd.edu
-###Date: 10 May 2025
+### Date: 12 May 2025
 
 **DSP-WENO** is a sign-preserving weighted essentially non-oscillatory (WENO) reconstruction method which incorporates an artificial neural network. This repository contains the code for the entropy stable TeCNO solvers for multi-dimensional scalar and systems of conservation laws. Additionally, the trainer is provided to train your own **DSP-WENO** if desired. Details on TeCNO solvers can be found in the following paper: [TeCNO](https://epubs.siam.org/doi/abs/10.1137/110836961?casa_token=YutiwMi6rcwAAAAA:jPQqHct6_kLnfO3yJudb6MMauXY1ENRPgrMqU0B1R0QDl7Lq7SRhYCzcE7y8kxmMs7qxTAuTLN4).
 
 ## Table of contents 
 
-* [Compiling the code](#markdown-header-compiling-the-code)
-* [Writing a param.in file](#markdown-header-writing-a-param.in-file)
-    * [Scalar case](#markdown-header-scalar-case)
-    * [Systems case](#markdown-header-systems-case)
-* [Extracting 1D Line Data](#markdown-header-extracting-1d-line-data)
-* [Training DSP-WENO](#markdown-header-training-dsp-weno)
+* [Compiling the code](#compiling-the-code)
+* [Writing a param.in file](#writing-a-paramin-file)
+    * [Scalar case](#scalar-case)
+    * [Systems case](#systems-case)
+* [Extracting 1D Line Data](#extracting-1d-line-data)
+* [Training DSP-WENO](#training-dsp-weno)
 
 ## Compiling the code
 
